@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derived Nouns (المشتقات) — Interactive Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#137a54; --green-d:#0d5a3d; --green-l:#e4f4ec;
+    --blue:#1668a8;  --blue-d:#0f4e80; --blue-l:#e3f0fa;
+    --amber:#b7770a; --amber-l:#fbf0da;
+    --rose:#c0396b;  --rose-d:#93264f; --rose-l:#fbe6ee;
+    --teal:#0e7c86;  --teal-d:#0a5f67; --teal-l:#ddf1f2;
+    --ruby:#a8203e; --ruby-d:#7e1730; --ruby-l:#fae6ea;
+    --gold:#c9a227;
+    --ink:#233436; --muted:#5d7175;
+    --bg:#f6f4ec; --card:#ffffff; --line:#e5e2d6;
+    --shadow:0 6px 22px rgba(30,50,45,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 100% -10%, #f9e6ea 0, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #f7efe1 0, transparent 55%),
+      var(--bg);
+    color:var(--ink); line-height:1.55; min-height:100vh; padding:22px 16px 60px;
+  }
+  .ar{font-family:'Amiri',serif; direction:rtl; unicode-bidi:isolate;}
+  .wrap{max-width:980px; margin:0 auto;}
+
+  header.top{display:flex; align-items:center; gap:14px; margin-bottom:18px;}
+  .badge{flex:0 0 auto; width:46px; height:46px; border-radius:13px;
+    background:linear-gradient(145deg,var(--ruby),var(--ruby-d));
+    color:#fff; display:grid; place-items:center; font-weight:800; font-size:18px; box-shadow:var(--shadow);}
+  header.top h1{font-size:19px; font-weight:800; line-height:1.2}
+  header.top p{font-size:14px; color:var(--muted)}
+  .progress{height:8px; background:#e7e3d5; border-radius:99px; overflow:hidden; margin:6px 0 20px}
+  .progress > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--gold),var(--ruby)); border-radius:99px; transition:width .4s ease}
+
+  .dots{display:flex; flex-wrap:wrap; gap:7px; justify-content:center; margin-bottom:18px}
+  .dots button{border:none; cursor:pointer; font:inherit; font-size:12px; font-weight:700; padding:5px 11px; border-radius:99px; background:#eae6d8; color:var(--muted); transition:.2s;}
+  .dots button.active{background:var(--ruby); color:#fff; box-shadow:var(--shadow)}
+  .dots button:hover{background:#ded9c8}
+  .dots button.active:hover{background:var(--ruby)}
+
+  .slide{display:none; animation:pop .35s ease}
+  .slide.show{display:block}
+  @keyframes pop{from{opacity:0; transform:translateY(10px)}to{opacity:1; transform:none}}
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:26px 24px}
+  .eyebrow{display:inline-block; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--ruby-d); background:var(--ruby-l); padding:5px 12px; border-radius:99px; margin-bottom:12px}
+  h2.title{font-size:21px; font-weight:800; margin-bottom:4px}
+  h2.title .ar{font-size:27px; display:block; margin-bottom:2px}
+  .lead{color:var(--muted); font-size:14.5px; margin-bottom:16px}
+
+  .hero{text-align:center; padding:34px 20px}
+  .hero .big{font-size:42px; color:var(--ruby-d); font-weight:700; margin-bottom:8px}
+  .hero .sub{font-size:19px; color:var(--amber); font-weight:800; margin-bottom:16px}
+  .mini{padding:10px 15px; border-radius:13px; font-weight:800; font-size:13px; display:inline-block}
+  .chips{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-top:10px}
+
+  .grid{display:grid; gap:11px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:760px){.g4{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  /* verb -> doer / receiver table */
+  table.drt{width:100%; border-collapse:separate; border-spacing:0 7px}
+  table.drt th{font-size:11.5px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.03em; padding:0 6px 2px; text-align:center}
+  table.drt td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:9px 6px; text-align:center}
+  table.drt td:first-child{border-left:1px solid var(--line); border-radius:12px 0 0 12px; background:var(--ruby-l)}
+  table.drt td:last-child{border-right:1px solid var(--line); border-radius:0 12px 12px 0}
+  table.drt .w{font-family:'Amiri',serif; font-size:24px; font-weight:700}
+  table.drt .pt{font-family:'Amiri',serif; font-size:14px; color:var(--muted); display:block}
+  .c-doer .w{color:var(--blue-d)} .c-rec .w{color:var(--rose-d)} .c-vb .w{color:var(--ruby-d)}
+
+  /* twelve overview cards */
+  .tw{background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:11px 10px; text-align:center; border-top:4px solid var(--ruby)}
+  .tw .n{font-family:'Amiri',serif; font-size:17px; font-weight:700; color:var(--ruby-d); line-height:1.3}
+  .tw .en{font-size:10.5px; font-weight:800; color:var(--muted); margin-bottom:4px}
+  .tw .pt{font-family:'Amiri',serif; font-size:17px; color:var(--amber); font-weight:700}
+  .tw .ex{font-family:'Amiri',serif; font-size:17px; font-weight:700; color:var(--ink); line-height:1.5}
+  .tw.g1{border-top-color:var(--blue)} .tw.g2{border-top-color:var(--teal)} .tw.g3{border-top-color:var(--amber)} .tw.g4{border-top-color:var(--rose)}
+
+  /* factory */
+  .vchips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px}
+  .vchip{border:1.5px solid var(--line); background:#fff; border-radius:12px; padding:5px 12px; cursor:pointer; font:inherit; text-align:center; transition:.15s}
+  .vchip .w{font-family:'Amiri',serif; font-size:20px; font-weight:700; color:var(--ink); display:block; line-height:1.3}
+  .vchip small{font-size:10px; color:var(--muted)}
+  .vchip:hover{border-color:var(--ruby)}
+  .vchip.active{background:var(--ruby); border-color:var(--ruby)}
+  .vchip.active .w,.vchip.active small{color:#fff}
+  .factory{background:var(--bg); border:1.5px dashed var(--line); border-radius:18px; padding:16px 12px}
+  .factory .root{text-align:center; margin-bottom:12px}
+  .factory .root .v{font-family:'Amiri',serif; font-size:38px; font-weight:700; color:var(--ruby-d)}
+  .factory .root .m{font-size:12.5px; color:var(--muted)}
+  .fcard{background:#fff; border:1.5px solid var(--line); border-radius:13px; padding:10px 8px; text-align:center}
+  .fcard .t{font-family:'Amiri',serif; font-size:15px; color:var(--muted); font-weight:700; line-height:1.3}
+  .fcard .t small{display:block; font-family:'Nunito',sans-serif; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.03em}
+  .fcard .p{font-family:'Amiri',serif; font-size:15px; color:var(--amber); font-weight:700}
+  .fcard .w{font-family:'Amiri',serif; font-size:27px; font-weight:700; color:var(--ruby-d); line-height:1.4}
+  .fcard .g{font-size:11px; color:var(--muted); font-style:italic}
+  .fcard.none{opacity:.45; border-style:dashed}
+  .fcard.none .w{color:#9aa1b5}
+
+  /* example chips */
+  .exc{background:#fff; border:1.5px solid var(--line); border-radius:13px; padding:9px 8px; text-align:center}
+  .exc .w{font-family:'Amiri',serif; font-size:23px; font-weight:700}
+  .exc .g{font-size:11px; color:var(--muted); font-style:italic}
+  .pat{background:var(--amber-l); border-radius:13px; padding:10px 12px; margin-bottom:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .pat .pw{font-family:'Amiri',serif; font-size:26px; font-weight:700; color:var(--amber)}
+  .pat .pd{font-size:13px; flex:1; min-width:180px}
+  .subhead{font-weight:800; font-size:13px; color:var(--ruby-d); margin:12px 0 8px}
+
+  /* tap cards */
+  .icard{border:1.5px solid var(--line); border-radius:16px; background:#fff; padding:13px; text-align:center; cursor:pointer; transition:.2s}
+  .icard:hover{border-color:var(--ruby)}
+  .icard .src{font-family:'Amiri',serif; font-size:23px; color:var(--muted); font-weight:700}
+  .icard .down{color:var(--ruby); font-weight:800; margin:3px 0; opacity:.35; transition:.25s}
+  .icard.open .down{opacity:1}
+  .icard .res{font-family:'Amiri',serif; font-size:25px; font-weight:700; color:var(--ruby-d); max-height:0; opacity:0; overflow:hidden; transition:.35s}
+  .icard.open .res{max-height:80px; opacity:1}
+  .icard .gloss{font-size:11.5px; color:var(--muted); font-style:italic; max-height:0; opacity:0; overflow:hidden; transition:.35s}
+  .icard.open .gloss{max-height:60px; opacity:1; margin-top:3px}
+  .icard .tap{font-size:10.5px; color:var(--muted); font-weight:700; margin-top:5px}
+  .icard.open .tap{display:none}
+
+  table.fm{width:100%; border-collapse:separate; border-spacing:0 6px; font-size:13px}
+  table.fm th{background:none; border:none; font-size:11px; color:var(--muted); text-transform:uppercase; text-align:center; padding:0 6px 2px}
+  table.fm td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:7px 8px; text-align:center}
+  table.fm td:first-child{border-left:1px solid var(--line); border-radius:10px 0 0 10px}
+  table.fm td:last-child{border-right:1px solid var(--line); border-radius:0 10px 10px 0}
+  table.fm .w{font-family:'Amiri',serif; font-size:21px; font-weight:700}
+
+  .rule{border-radius:14px; padding:12px 14px; margin-bottom:14px; font-size:13.5px}
+  .rule b.h{display:block; font-size:11px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:3px}
+  .rule .ar{font-size:17px; font-weight:700}
+  .rule-ruby{background:var(--ruby-l)} .rule-ruby b.h{color:var(--ruby-d)}
+  .rule-blue{background:var(--blue-l)} .rule-blue b.h{color:var(--blue-d)}
+  .rule-teal{background:var(--teal-l)} .rule-teal b.h{color:var(--teal-d)}
+  .rule-amber{background:var(--amber-l)} .rule-amber b.h{color:var(--amber)}
+
+  .qbox{background:var(--green-l); border:1px solid #cfe6da; border-radius:14px; padding:12px 14px; margin-top:12px}
+  .qbox .tag{font-size:10.5px; font-weight:800; color:var(--green-d); text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px}
+  .qbox .qitem{padding:7px 0; border-bottom:1px dashed #cfe6da}
+  .qbox .qitem:last-child{border-bottom:none; padding-bottom:0}
+  .qbox .line{font-family:'Amiri',serif; font-size:20px; font-weight:700; color:var(--green-d); line-height:1.8}
+  .qbox .hl{padding:0 4px; border-radius:5px; background:#fff; border:1px solid #b9dbc7}
+  .qbox small{display:block; color:var(--muted); font-style:italic; font-size:11.5px; margin-top:2px}
+
+  .note{margin-top:10px; background:#fffbf0; border:1px solid #efe6c4; border-radius:14px; padding:12px 14px; font-size:13px; display:flex; gap:10px}
+  .note .ic{flex:0 0 auto; width:26px; height:26px; border-radius:8px; background:var(--gold); color:#fff; display:grid; place-items:center; font-weight:800}
+
+  table.recap{width:100%; border-collapse:separate; border-spacing:0 5px; font-size:12.5px}
+  table.recap th{background:none; border:none; font-size:10.5px; color:var(--muted); text-transform:uppercase; text-align:left; padding:0 8px 2px}
+  table.recap td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 9px; vertical-align:middle}
+  table.recap td:first-child{border-left:1px solid var(--line); border-radius:10px 0 0 10px; font-weight:800}
+  table.recap td:last-child{border-right:1px solid var(--line); border-radius:0 10px 10px 0}
+  table.recap .w{font-family:'Amiri',serif; font-size:18px; font-weight:700; color:var(--ruby-d)}
+  table.recap .nm{font-family:'Amiri',serif; font-size:17px; font-weight:700}
+
+  .quiz .q-word{text-align:center; font-family:'Amiri',serif; font-size:46px; font-weight:700; margin:8px 0}
+  .quiz .q-for{text-align:center; font-size:14px; color:var(--muted); margin-bottom:12px}
+  .q-count{text-align:center; color:var(--muted); font-size:13px; font-weight:700; margin-bottom:10px}
+  .opts{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  @media(max-width:560px){.opts{grid-template-columns:1fr}}
+  .opt{border:2px solid var(--line); background:#fff; border-radius:14px; padding:10px; cursor:pointer; font:inherit; font-weight:800; font-size:12.5px; transition:.15s; text-align:center}
+  .opt .ar{display:block; font-size:20px; font-weight:700}
+  .opt:hover{border-color:var(--ruby); background:#fdf5f7}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:var(--green); color:#fff; border-color:var(--green)}
+  .opt.wrong{background:var(--rose-l); border-color:var(--rose); color:var(--rose)}
+  .fb{margin-top:14px; border-radius:14px; padding:13px 15px; font-size:14px; font-weight:600; display:none}
+  .fb.show{display:block; animation:pop .3s}
+  .fb.ok{background:var(--green-l); color:var(--green-d)}
+  .fb.no{background:var(--rose-l); color:var(--rose)}
+  .scoreline{text-align:center; margin-top:16px; font-weight:800; color:var(--green-d)}
+
+  .keyrow{display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 16px; margin-bottom:9px}
+  .keyrow .qn{flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--ruby-l); color:var(--ruby-d); font-weight:800; display:grid; place-items:center; font-size:13px}
+  .keyrow .body{flex:1}
+  .keyrow .phrase{font-family:'Amiri',serif; font-size:24px; font-weight:700; color:var(--ink)}
+  .keyrow .verdict{display:inline-block; font-size:11.5px; font-weight:800; padding:3px 11px; border-radius:99px; margin-left:10px; vertical-align:middle; background:var(--ruby-l); color:var(--ruby-d)}
+  .keyrow .why{font-size:12.5px; color:var(--muted); margin-top:4px}
+
+  .nav{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:20px}
+  .btn{border:none; cursor:pointer; font:inherit; font-weight:800; font-size:15px; padding:12px 22px; border-radius:13px; transition:.2s}
+  .btn.prev{background:#eae6d8; color:var(--ink)} .btn.prev:hover{background:#ded9c8}
+  .btn.next{background:linear-gradient(145deg,var(--ruby),var(--ruby-d)); color:#fff; box-shadow:var(--shadow)}
+  .btn.next:hover{filter:brightness(1.12)}
+  .btn:disabled{opacity:.4; cursor:default}
+  .kbd-hint{text-align:center; color:var(--muted); font-size:12px; margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="badge">مشتقّ</div>
+    <div>
+      <h1>Derived Nouns</h1>
+      <p class="ar" style="font-size:15px">المُشْتَقَّات</p>
+    </div>
+  </header>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="dots" id="dots"></div>
+
+  <!-- 0 INTRO -->
+  <section class="slide show">
+    <div class="panel hero">
+      <div class="ar big">المُشْتَقَّات</div>
+      <div class="sub">One Root, Many Nouns</div>
+      <p class="lead" style="max-width:640px;margin:0 auto 16px">
+        From the single verb <span class="ar" style="font-size:20px">كَتَبَ</span> Arabic builds the writer, the written, the office,
+        the act of writing… Each noun has its own <b>pattern</b>. Learn the twelve derived forms, build them
+        yourself in the word factory, and find them all in the Qur’an.
+      </p>
+      <div class="chips">
+        <span class="mini" style="background:var(--blue-l);color:var(--blue-d)">كَاتِبٌ</span>
+        <span class="mini" style="background:var(--rose-l);color:var(--rose-d)">مَكْتُوبٌ</span>
+        <span class="mini" style="background:var(--teal-l);color:var(--teal-d)">مَكْتَبٌ</span>
+        <span class="mini" style="background:var(--amber-l);color:var(--amber)">كِتَابَةٌ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 BIG IDEA -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow">The big idea</span>
+      <h2 class="title"><span class="ar">مِنَ الفِعْلِ إِلَى الاسْم</span>One verb gives a doer and a receiver</h2>
+      <p class="lead">Take the verb and ask two questions: <b>who does it?</b> and <b>who receives it?</b></p>
+      <table class="drt">
+        <thead><tr><th>Verb</th><th>Doer — فَاعِلٌ</th><th>Receiver — مَفْعُولٌ</th></tr></thead>
+        <tbody>
+          <tr class="c-vb"><td><span class="w">كَتَبَ</span><span class="pt">فَعَلَ</span></td><td class="c-doer"><span class="w">كَاتِبٌ</span><span class="pt">فَاعِلٌ</span></td><td class="c-rec"><span class="w">مَكْتُوبٌ</span><span class="pt">مَفْعُولٌ</span></td></tr>
+          <tr class="c-vb"><td><span class="w">لَعَنَ</span></td><td class="c-doer"><span class="w">لَاعِنٌ</span></td><td class="c-rec"><span class="w">مَلْعُونٌ</span></td></tr>
+          <tr class="c-vb"><td><span class="w">قَتَلَ</span></td><td class="c-doer"><span class="w">قَاتِلٌ</span></td><td class="c-rec"><span class="w">مَقْتُولٌ</span></td></tr>
+          <tr class="c-vb"><td><span class="w">شَرِبَ</span></td><td class="c-doer"><span class="w">شَارِبٌ</span></td><td class="c-rec"><span class="w">مَشْرُوبٌ</span></td></tr>
+        </tbody>
+      </table>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">أُولَٰئِكَ يَلْعَنُهُمُ اللَّهُ وَيَلْعَنُهُمُ <span class="hl">اللَّاعِنُونَ</span></div><small>doer of لَعَنَ — Sūrah al-Baqarah, 2:159: “those — Allah curses them and the cursers curse them.”</small></div>
+        <div class="qitem"><div class="line"><span class="hl">مَّلْعُونِينَ</span> أَيْنَمَا ثُقِفُوا أُخِذُوا وَقُتِّلُوا تَقْتِيلًا</div><small>receiver of لَعَنَ — Sūrah al-Aḥzāb, 33:61: “accursed wherever they are found.”</small></div>
+        <div class="qitem"><div class="line">بَيْضَاءَ لَذَّةٍ لِّ<span class="hl">لشَّارِبِينَ</span></div><small>doer of شَرِبَ — Sūrah aṣ-Ṣāffāt, 37:46: “white, a delight for the drinkers.”</small></div>
+        <div class="qitem"><div class="line">يَجِدُونَهُ <span class="hl">مَكْتُوبًا</span> عِندَهُمْ فِي التَّوْرَاةِ وَالْإِنجِيلِ</div><small>receiver of كَتَبَ — Sūrah al-A‘rāf, 7:157: “whom they find written with them in the Torah and the Gospel.”</small></div>
+        <div class="qitem"><div class="line">وَلَا يَأْبَ <span class="hl">كَاتِبٌ</span> أَن يَكْتُبَ كَمَا عَلَّمَهُ اللَّهُ</div><small>doer of كَتَبَ — Sūrah al-Baqarah, 2:282: “and let no scribe refuse to write as Allah has taught him.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 THE TWELVE -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow">The map</span>
+      <h2 class="title"><span class="ar">اثْنَا عَشَرَ نَوْعًا</span>Twelve forms, one page</h2>
+      <p class="lead">Pattern in gold, example from your deck below it.</p>
+      <div class="grid g4">
+        <div class="tw g1"><div class="n">اسْمُ الفَاعِل</div><div class="en">Doer</div><div class="pt">فَاعِل</div><div class="ex">لَاعِبٌ · قَاتِلٌ</div></div>
+        <div class="tw g1"><div class="n">اسْمُ المَفْعُول</div><div class="en">Receiver</div><div class="pt">مَفْعُول</div><div class="ex">مَقْتُولٌ · مَلْعُوبٌ</div></div>
+        <div class="tw g2"><div class="n">اسْمَا المَكَانِ وَالزَّمَان</div><div class="en">Place &amp; time</div><div class="pt">مَفْعَل / مَفْعِل</div><div class="ex">مَلْعَبٌ · مَقْتَلٌ<br>مَشْرِقٌ · مَغْرِبٌ</div></div>
+        <div class="tw g3"><div class="n">المَصْدَر</div><div class="en">Verbal noun</div><div class="pt">no fixed pattern</div><div class="ex">قَتْلًا · ضَرْبًا</div></div>
+        <div class="tw g3"><div class="n">اسْمُ المَرَّة</div><div class="en">Single occurrence</div><div class="pt">فَعْلَة</div><div class="ex">قَتْلَةٌ · لَعْبَةٌ</div></div>
+        <div class="tw g3"><div class="n">اسْمُ الهَيْئَة</div><div class="en">Manner</div><div class="pt">فِعْلَة</div><div class="ex">قِتْلَةٌ · مِشْيَةٌ</div></div>
+        <div class="tw g4"><div class="n">الصِّفَةُ المُشَبَّهَة</div><div class="en">Lasting quality</div><div class="pt">فُعَال · فَعْلَان …</div><div class="ex">شُجَاعٌ · عَطْشَانُ</div></div>
+        <div class="tw g4"><div class="n">اسْمُ التَّفْضِيل</div><div class="en">Comparative</div><div class="pt">أَفْعَل</div><div class="ex">خَيْرٌ · شَرٌّ</div></div>
+        <div class="tw g4"><div class="n">صِيَغُ المُبَالَغَة</div><div class="en">Intensive</div><div class="pt">فَعَّال · فَعُول</div><div class="ex">لَعَّابٌ · جَهُولٌ</div></div>
+        <div class="tw g2"><div class="n">اسْمُ الآلَة</div><div class="en">Tool</div><div class="pt">مِفْعَال / مِفْعَل</div><div class="ex">مِفْتَاحٌ</div></div>
+        <div class="tw g2"><div class="n">النِّسْبَة</div><div class="en">Belonging</div><div class="pt">ـِيّ</div><div class="ex">نَيْجِيرِيٌّ · مَالِكِيٌّ<br>شَافِعِيٌّ</div></div>
+        <div class="tw g2"><div class="n">التَّصْغِير</div><div class="en">Diminutive</div><div class="pt">فُعَيْل</div><div class="ex">كُلَيْبٌ · عُمَيْرٌ</div></div>
+      </div>
+      <div class="note"><span class="ic">i</span><div>Strictly speaking, the verbal noun, <span class="ar" style="font-size:17px">النِّسْبَة</span> and <span class="ar" style="font-size:17px">التَّصْغِير</span> are not “derived” from a verb in the same way, but the deck groups them here, so this lesson does too.</div></div>
+    </div>
+  </section>
+
+  <!-- 3 FACTORY -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--ruby-d);background:var(--ruby-l)">Try it</span>
+      <h2 class="title" style="font-size:20px">The word factory — tap a verb</h2>
+      <p class="lead">Each verb is shown with the nouns it really gives. Faded boxes mean there is no common word of that kind.</p>
+      <div class="vchips" id="fv"></div>
+      <div class="factory" id="factory"></div>
+      <div class="note"><span class="ic">i</span><div>Only forms I am sure are in real use are listed. For <span class="ar" style="font-size:17px">لَعِبَ</span> the receiver <span class="ar" style="font-size:17px">مَلْعُوبٌ</span> needs a preposition (<span class="ar" style="font-size:17px">مَلْعُوبٌ بِهِ</span>), because لَعِبَ is intransitive.</div></div>
+    </div>
+  </section>
+
+  <!-- 4 DOER & RECEIVER -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--blue-d);background:var(--blue-l)">Doer &amp; receiver</span>
+      <h2 class="title"><span class="ar">اسْمُ الفَاعِلِ وَاسْمُ المَفْعُول</span>فَاعِلٌ · مَفْعُولٌ</h2>
+      <div class="pat"><span class="pw">فَاعِل</span><span class="pd"><b>The doer.</b> Add an alif after the first letter and kasra before the last: <span class="ar">لَاعِبٌ، قَاتِلٌ</span>.</span></div>
+      <div class="pat"><span class="pw">مَفْعُول</span><span class="pd"><b>The receiver.</b> A مَـ in front and a و before the last letter: <span class="ar">مَقْتُولٌ، مَلْعُوبٌ</span>.</span></div>
+      <div class="subhead">Verbs with extra letters (Forms II–X)</div>
+      <table class="fm">
+        <thead><tr><th>Present</th><th>Doer</th><th>Receiver</th></tr></thead>
+        <tbody>
+          <tr><td><span class="w">يُخْرِجُ</span></td><td><span class="w" style="color:var(--blue-d)">مُخْرِجٌ</span></td><td><span class="w" style="color:var(--rose-d)">مُخْرَجٌ</span></td></tr>
+          <tr><td><span class="w">يَتَطَهَّرُ</span></td><td><span class="w" style="color:var(--blue-d)">مُتَطَهِّرٌ</span></td><td><span class="w" style="color:var(--rose-d)">مُتَطَهَّرٌ</span></td></tr>
+          <tr><td><span class="w">يَسْتَغْفِرُ</span></td><td><span class="w" style="color:var(--blue-d)">مُسْتَغْفِرٌ</span></td><td><span class="w" style="color:var(--rose-d)">مُسْتَغْفَرٌ</span></td></tr>
+        </tbody>
+      </table>
+      <p class="lead" style="margin:6px 0 0;font-size:12.5px">Replace the present prefix with <span class="ar" style="font-size:17px">مُـ</span>: kasra before the last letter for the doer, fatḥa for the receiver.</p>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">وَمَا خَلَقْنَا السَّمَاءَ وَالْأَرْضَ وَمَا بَيْنَهُمَا <span class="hl">لَاعِبِينَ</span></div><small>doer, فَاعِل — Sūrah al-Anbiyā’, 21:16: “We did not create the heavens and earth and what is between them in play.”</small></div>
+        <div class="qitem"><div class="line">إِنَّهُ كَانَ <span class="hl">مَنصُورًا</span></div><small>receiver, مَفْعُول — Sūrah al-Isrā’, 17:33: “indeed he has been supported.”</small></div>
+        <div class="qitem"><div class="line">مَقَامًا <span class="hl">مَّحْمُودًا</span></div><small>receiver of حَمِدَ — Sūrah al-Isrā’, 17:79: “a praised station.”</small></div>
+        <div class="qitem"><div class="line">وَاللَّهُ <span class="hl">مُخْرِجٌ</span> مَّا كُنتُمْ تَكْتُمُونَ</div><small>doer of أَخْرَجَ (Form IV) — Sūrah al-Baqarah, 2:72: “and Allah will bring out what you were concealing.”</small></div>
+        <div class="qitem"><div class="line">إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ <span class="hl">الْمُتَطَهِّرِينَ</span></div><small>doer of تَطَهَّرَ (Form V) — Sūrah al-Baqarah, 2:222: “Allah loves those who repent and loves those who purify themselves.”</small></div>
+        <div class="qitem"><div class="line">وَ<span class="hl">الْمُسْتَغْفِرِينَ</span> بِالْأَسْحَارِ</div><small>doer of اسْتَغْفَرَ (Form X) — Sūrah Āl ‘Imrān, 3:17: “and those who seek forgiveness before dawn.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 INTENSIVE -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--rose-d);background:var(--rose-l)">Intensive forms</span>
+      <h2 class="title"><span class="ar">صِيَغُ المُبَالَغَة</span>When the doer does it a lot</h2>
+      <div class="rule rule-ruby"><b class="h">The idea</b>A <b>doer</b> noun says someone does something; an <b>intensive</b> noun says they do it again and again, or to a great degree. A لَاعِبٌ plays; a لَعَّابٌ is always playing.</div>
+      <div class="grid g3">
+        <div class="exc"><div class="w" style="color:var(--amber)">فَعَّال</div><div class="w">لَعَّابٌ</div><div class="g">always playing</div></div>
+        <div class="exc"><div class="w" style="color:var(--amber)">فَعُول</div><div class="w">جَهُولٌ</div><div class="g">very ignorant</div></div>
+        <div class="exc"><div class="w" style="color:var(--amber)">مِفْعَال</div><div class="w">مِعْطَاءٌ</div><div class="g">very giving</div></div>
+      </div>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">إِنَّهُ كَانَ <span class="hl">غَفَّارًا</span></div><small>فَعَّال — Sūrah Nūḥ, 71:10: “indeed He is ever Forgiving [again and again].”</small></div>
+        <div class="qitem"><div class="line">إِنَّهُ كَانَ ظَلُومًا <span class="hl">جَهُولًا</span></div><small>فَعُول — Sūrah al-Aḥzāb, 33:72: “indeed he was unjust and ignorant.” The deck’s own جَهُولٌ.</small></div>
+        <div class="qitem"><div class="line">بَلْ هُوَ <span class="hl">كَذَّابٌ</span> أَشِرٌ</div><small>فَعَّال — Sūrah al-Qamar, 54:25: “rather, he is an insolent liar.”</small></div>
+        <div class="qitem"><div class="line">إِنَّهُ كَانَ عَبْدًا <span class="hl">شَكُورًا</span></div><small>فَعُول — Sūrah al-Isrā’, 17:3: “indeed he was a grateful servant.”</small></div>
+        <div class="qitem"><div class="line">وَهُوَ <span class="hl">الْفَتَّاحُ</span> الْعَلِيمُ</div><small>فَعَّال — Sūrah Saba’, 34:26: “and He is the [All-]Opener, the All-Knowing.”</small></div>
+        <div class="qitem"><div class="line">يُرْسِلِ السَّمَاءَ عَلَيْكُم <span class="hl">مِّدْرَارًا</span></div><small>مِفْعَال — Sūrah Nūḥ, 71:11: “He will send the sky upon you in abundant rain.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 PLACE TIME TOOL -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--teal-d);background:var(--teal-l)">Place, time &amp; tool</span>
+      <h2 class="title"><span class="ar">المَكَانُ وَالزَّمَانُ وَالآلَة</span>مَفْعَل · مَفْعِل · مِفْعَال</h2>
+      <div class="rule rule-teal"><b class="h">Place &amp; time — one pattern</b>The place or time of an action is <span class="ar">مَفْعَل</span> when the present has fatḥa or ḍamma on the middle letter (<span class="ar">يَلْعَبُ ← مَلْعَبٌ، يَقْتُلُ ← مَقْتَلٌ</span>) and <span class="ar">مَفْعِل</span> when it has kasra (<span class="ar">يَجْلِسُ ← مَجْلِسٌ</span>). A few words are exceptions: <span class="ar">مَشْرِقٌ، مَغْرِبٌ، مَسْجِدٌ</span> take kasra.</div>
+      <div class="grid g4">
+        <div class="exc"><div class="w">مَلْعَبٌ</div><div class="g">playground</div></div>
+        <div class="exc"><div class="w">مَقْتَلٌ</div><div class="g">place of killing</div></div>
+        <div class="exc"><div class="w">مَشْرِقٌ</div><div class="g">east, place of rising</div></div>
+        <div class="exc"><div class="w">مَغْرِبٌ</div><div class="g">west, place of setting</div></div>
+      </div>
+      <div class="rule rule-teal" style="margin-top:12px"><b class="h">Tool</b>The instrument that does the action, with a مِـ in front: <span class="ar">مِفْتَاحٌ</span> — the thing you open <i>with</i> (فَتَحَ). Common patterns are <span class="ar">مِفْعَال، مِفْعَل، مِفْعَلَة</span>.</div>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">رَّبُّ <span class="hl">الْمَشْرِقِ</span> وَ<span class="hl">الْمَغْرِبِ</span> لَا إِلَٰهَ إِلَّا هُوَ</div><small>place — Sūrah al-Muzzammil, 73:9: “Lord of the east and the west; there is no god but Him.” The deck’s own pair.</small></div>
+        <div class="qitem"><div class="line">قَدْ عَلِمَ كُلُّ أُنَاسٍ <span class="hl">مَّشْرَبَهُمْ</span></div><small>place of شَرِبَ — Sūrah al-Baqarah, 2:60: “each people knew its drinking place.”</small></div>
+        <div class="qitem"><div class="line">إِلَى اللَّهِ <span class="hl">مَرْجِعُكُمْ</span> جَمِيعًا</div><small>place/time of رَجَعَ — Sūrah al-Mā’idah, 5:48: “to Allah is your return, all together.”</small></div>
+        <div class="qitem"><div class="line">لَ<span class="hl">مَسْجِدٌ</span> أُسِّسَ عَلَى التَّقْوَىٰ</div><small>place of سَجَدَ, an exception that takes kasra — Sūrah at-Tawbah, 9:108: “a mosque founded on piety.”</small></div>
+        <div class="qitem"><div class="line"><span class="hl">الْمِصْبَاحُ</span> فِي زُجَاجَةٍ</div><small>tool, مِفْعَال — Sūrah an-Nūr, 24:35: “the lamp is in a glass.”</small></div>
+        <div class="qitem"><div class="line">وَعِندَهُ <span class="hl">مَفَاتِحُ</span> الْغَيْبِ لَا يَعْلَمُهَا إِلَّا هُوَ</div><small>tool: the plural of the مِفْتَاح family — Sūrah al-An‘ām, 6:59: “and with Him are the keys of the unseen.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 ACTION NOUNS -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--amber);background:var(--amber-l)">Action nouns</span>
+      <h2 class="title"><span class="ar">المَصْدَرُ وَالمَرَّةُ وَالهَيْئَة</span>The action itself, once, and the way</h2>
+      <div class="rule rule-amber"><b class="h">Three nouns from one action</b>
+        <b style="display:inline;font-size:inherit;text-transform:none">المَصْدَر</b> is the action in general: <span class="ar">قَتْلًا، ضَرْبًا</span> — it has <b>no single pattern</b>, so learn it with the verb.
+        <br><b style="display:inline;font-size:inherit;text-transform:none">اسْمُ المَرَّة</b> (<span class="ar">فَعْلَة</span>) is <b>one</b> occurrence: <span class="ar">قَتْلَةٌ، لَعْبَةٌ</span>.
+        <br><b style="display:inline;font-size:inherit;text-transform:none">اسْمُ الهَيْئَة</b> (<span class="ar">فِعْلَة</span>) is the <b>manner</b>: <span class="ar">قِتْلَةٌ، مِشْيَةٌ</span>.</div>
+      <p class="lead" style="margin-bottom:8px">Fatḥa or kasra on the first letter changes the meaning. Tap each card:</p>
+      <div class="grid g3">
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">قَتَلَ</div><div class="down">↓</div>
+          <div class="res">قَتْلَةٌ · قِتْلَةٌ</div><div class="gloss">one killing · a way of killing</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">جَلَسَ</div><div class="down">↓</div>
+          <div class="res">جَلْسَةٌ · جِلْسَةٌ</div><div class="gloss">one sitting · a way of sitting</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">مَشَى</div><div class="down">↓</div>
+          <div class="res">مَشْيَةٌ · مِشْيَةٌ</div><div class="gloss">one walk · a gait</div><div class="tap">tap ▸</div></div>
+      </div>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">إِنَّ <span class="hl">قَتْلَهُمْ</span> كَانَ خِطْئًا كَبِيرًا</div><small>المَصْدَر of قَتَلَ — Sūrah al-Isrā’, 17:31: “indeed, killing them is a great sin.”</small></div>
+        <div class="qitem"><div class="line">فَ<span class="hl">ضَرْبَ</span> الرِّقَابِ</div><small>المَصْدَر of ضَرَبَ — Sūrah Muḥammad, 47:4: “then strike the necks.”</small></div>
+        <div class="qitem"><div class="line">فَإِذَا نُفِخَ فِي الصُّورِ <span class="hl">نَفْخَةٌ</span> وَاحِدَةٌ</div><small>اسْمُ المَرَّة — Sūrah al-Ḥāqqah, 69:13: “and when the Trumpet is blown with one blast.”</small></div>
+        <div class="qitem"><div class="line">فَدُكَّتَا <span class="hl">دَكَّةً</span> وَاحِدَةً</div><small>اسْمُ المَرَّة — Sūrah al-Ḥāqqah, 69:14: “and they are crushed with a single crushing.”</small></div>
+        <div class="qitem"><div class="line">إِن كَانَتْ إِلَّا <span class="hl">صَيْحَةً</span> وَاحِدَةً</div><small>اسْمُ المَرَّة — Sūrah Yā-Sīn, 36:29: “it was but one shout.” Note the word وَاحِدَة (“one”) beside it each time.</small></div>
+      </div>
+      <div class="note"><span class="ic">i</span><div>I have no Qur’anic example of <span class="ar" style="font-size:17px">اسْمُ الهَيْئَة</span> that I can confirm, so none is shown.</div></div>
+    </div>
+  </section>
+
+  <!-- 8 QUALITY & COMPARISON -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--rose-d);background:var(--rose-l)">Quality &amp; comparison</span>
+      <h2 class="title"><span class="ar">الصِّفَةُ المُشَبَّهَةُ وَاسْمُ التَّفْضِيل</span>Being, and being more</h2>
+      <div class="rule rule-ruby"><b class="h">Lasting quality — الصِّفَةُ المُشَبَّهَة</b>The doer noun describes an action (<span class="ar">كَاتِبٌ</span>, writing now). A <b>lasting-quality</b> adjective describes what someone <i>is</i>: <span class="ar">شُجَاعٌ</span> (brave), <span class="ar">عَطْشَانُ</span> (thirsty). Common patterns: <span class="ar">فَعِيل، فَعْلَان، أَفْعَل، فُعَال</span>.</div>
+      <div class="rule rule-ruby"><b class="h">Comparative — اسْمُ التَّفْضِيل</b>Pattern <span class="ar">أَفْعَل</span>: <span class="ar">أَكْبَرُ</span> (greater), <span class="ar">أَحْسَنُ</span> (better). The two shortened forms <span class="ar">خَيْرٌ</span> (better) and <span class="ar">شَرٌّ</span> (worse) are the ones in your deck.</div>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">يَحْسَبُهُ <span class="hl">الظَّمْآنُ</span> مَاءً</div><small>lasting quality, فَعْلَان like عَطْشَان — Sūrah an-Nūr, 24:39: “the thirsty one thinks it is water.”</small></div>
+        <div class="qitem"><div class="line">رَجَعَ مُوسَىٰ إِلَىٰ قَوْمِهِ <span class="hl">غَضْبَانَ</span> أَسِفًا</div><small>lasting quality, فَعْلَان — Sūrah al-A‘rāf, 7:150: “Moses returned to his people, angry and grieved.” (A diptote, so no tanwīn.)</small></div>
+        <div class="qitem"><div class="line">وَ<span class="hl">الْآخِرَةُ</span> <span class="hl">خَيْرٌ</span> وَأَبْقَىٰ</div><small>comparative — Sūrah al-A‘lā, 87:17: “while the Hereafter is better and more lasting.”</small></div>
+        <div class="qitem"><div class="line">إِنَّ <span class="hl">شَرَّ</span> الدَّوَابِّ عِندَ اللَّهِ الصُّمُّ الْبُكْمُ</div><small>comparative — Sūrah al-Anfāl, 8:22: “the worst of living creatures in Allah’s sight are the deaf and dumb.”</small></div>
+        <div class="qitem"><div class="line">وَلَذِكْرُ اللَّهِ <span class="hl">أَكْبَرُ</span></div><small>comparative, أَفْعَل — Sūrah al-‘Ankabūt, 29:45: “and the remembrance of Allah is greater.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 BELONGING & SMALLNESS -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--teal-d);background:var(--teal-l)">Belonging &amp; smallness</span>
+      <h2 class="title"><span class="ar">النِّسْبَةُ وَالتَّصْغِير</span>ـِيّ · فُعَيْل</h2>
+      <div class="rule rule-teal"><b class="h">Belonging — النِّسْبَة</b>Add <span class="ar">ـِيّ</span> (kasra, then a doubled yā’) to a name or place: <span class="ar">مَالِك ← مَالِكِيٌّ</span>, a follower of Imam Mālik. Tap each card:</div>
+      <div class="grid g3">
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">نِيجِيرِيَا</div><div class="down">↓</div><div class="res">نَيْجِيرِيٌّ</div><div class="gloss">Nigerian</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">مَالِك</div><div class="down">↓</div><div class="res">مَالِكِيٌّ</div><div class="gloss">of the Mālikī school</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">الشَّافِعِي</div><div class="down">↓</div><div class="res">شَافِعِيٌّ</div><div class="gloss">of the Shāfi‘ī school</div><div class="tap">tap ▸</div></div>
+      </div>
+      <div class="rule rule-teal" style="margin-top:14px"><b class="h">Smallness — التَّصْغِير</b>Pattern <span class="ar">فُعَيْل</span>: ḍamma on the first letter, then a yā’ with sukūn after the second. It means “little” — or affection. Tap each card:</div>
+      <div class="grid g3">
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">كَلْب</div><div class="down">↓</div><div class="res">كُلَيْبٌ</div><div class="gloss">a little dog</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">عُمَر</div><div class="down">↓</div><div class="res">عُمَيْرٌ</div><div class="gloss">little ‘Umar</div><div class="tap">tap ▸</div></div>
+        <div class="icard" onclick="this.classList.toggle('open')"><div class="src">ابْن</div><div class="down">↓</div><div class="res">بُنَيٌّ</div><div class="gloss">my dear little son</div><div class="tap">tap ▸</div></div>
+      </div>
+      <div class="qbox"><div class="tag">From the Qur’an</div>
+        <div class="qitem"><div class="line">إِنَّا أَنزَلْنَاهُ قُرْآنًا <span class="hl">عَرَبِيًّا</span></div><small>belonging — Sūrah Yūsuf, 12:2: “We have sent it down as an Arabic Qur’an.”</small></div>
+        <div class="qitem"><div class="line">مَا كَانَ إِبْرَاهِيمُ <span class="hl">يَهُودِيًّا</span> وَلَا <span class="hl">نَصْرَانِيًّا</span></div><small>belonging — Sūrah Āl ‘Imrān, 3:67: “Abraham was neither a Jew nor a Christian.”</small></div>
+        <div class="qitem"><div class="line">يَا <span class="hl">بُنَيَّ</span> لَا تُشْرِكْ بِاللَّهِ</div><small>smallness as affection — Sūrah Luqmān, 31:13: “O my [dear] son, do not associate anything with Allah.”</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 RECAP -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--gold);background:#faf3dc">Recap</span>
+      <h2 class="title" style="font-size:20px">All twelve, in one table</h2>
+      <table class="recap">
+        <thead><tr><th>Form</th><th>Pattern</th><th>Example</th><th>Meaning</th></tr></thead>
+        <tbody id="recapBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 11 QUIZ -->
+  <section class="slide">
+    <div class="panel quiz">
+      <span class="eyebrow" style="color:var(--gold);background:#faf3dc">Quick Check</span>
+      <h2 class="title" style="font-size:20px">Which derived noun is it?</h2>
+      <p class="lead">One question for each of the twelve forms.</p>
+      <div class="q-count" id="qcount"></div>
+      <div class="q-word ar" id="qword"></div>
+      <div class="q-for" id="qfor"></div>
+      <div class="opts" id="qopts"></div>
+      <div class="fb" id="qfb"></div>
+      <div class="scoreline" id="qscore"></div>
+    </div>
+  </section>
+
+  <!-- 12 ANSWER KEY -->
+  <section class="slide">
+    <div class="panel">
+      <span class="eyebrow" style="color:var(--gold);background:#faf3dc">Reference</span>
+      <h2 class="title" style="font-size:20px">Quiz — questions &amp; answers</h2>
+      <p class="lead">All twelve words, with the form and the reason.</p>
+      <div id="keyList"></div>
+    </div>
+  </section>
+
+  <!-- 13 DONE -->
+  <section class="slide">
+    <div class="panel hero">
+      <div style="font-size:52px">🎉</div>
+      <div class="ar big" style="font-size:34px">أَحْسَنْتَ!</div>
+      <div class="sub">You can read the pattern of a derived noun</div>
+      <p class="lead" style="max-width:620px;margin:0 auto">From one root, twelve kinds of noun — each recognised by its pattern.
+        Next time you meet a new word, ask which pattern it wears.</p>
+      <div class="chips" style="margin-top:6px">
+        <span class="mini" style="background:var(--blue-l);color:var(--blue-d)">فَاعِل</span>
+        <span class="mini" style="background:var(--rose-l);color:var(--rose-d)">مَفْعُول</span>
+        <span class="mini" style="background:var(--teal-l);color:var(--teal-d)">مَفْعَل</span>
+        <span class="mini" style="background:var(--amber-l);color:var(--amber)">فَعْلَة</span>
+        <span class="mini" style="background:var(--ruby-l);color:var(--ruby-d)">أَفْعَل</span>
+      </div>
+      <div style="margin-top:22px"><button class="btn next" onclick="goTo(0)">↺ Start over</button></div>
+    </div>
+  </section>
+
+  <div class="nav">
+    <button class="btn prev" id="prevBtn" onclick="move(-1)">‹ Back</button>
+    <button class="btn next" id="nextBtn" onclick="move(1)">Next ›</button>
+  </div>
+  <p class="kbd-hint">Tip: use the ← and → arrow keys to move between steps</p>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const labels=['Intro','Big Idea','The Twelve','Factory','Doer & Receiver','Intensive','Place & Tool','Action Nouns','Quality','Belonging','Recap','Quiz','Answer Key','Done'];
+  let cur=0;
+  const dotWrap=document.getElementById('dots');
+  labels.forEach((l,i)=>{const b=document.createElement('button');b.textContent=l;b.onclick=()=>goTo(i);dotWrap.appendChild(b);});
+  const dots=[...dotWrap.children];
+  function render(){
+    slides.forEach((s,i)=>s.classList.toggle('show',i===cur));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===cur));
+    document.getElementById('bar').style.width=(cur/(slides.length-1)*100)+'%';
+    document.getElementById('prevBtn').disabled=cur===0;
+    document.getElementById('nextBtn').style.visibility = cur===slides.length-1?'hidden':'visible';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function move(d){ goTo(Math.min(slides.length-1,Math.max(0,cur+d))); }
+  function goTo(i){ cur=i; render(); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')move(1); if(e.key==='ArrowLeft')move(-1); });
+
+  /* =============== the twelve forms =============== */
+  const TY={
+    fa3il:   {ar:'اسْمُ الفَاعِل',            en:'Doer',                  pat:'فَاعِل',            ex:'لَاعِبٌ',     gl:'player'},
+    maf3ul:  {ar:'اسْمُ المَفْعُول',          en:'Receiver',              pat:'مَفْعُول',          ex:'مَقْتُولٌ',   gl:'killed'},
+    makan:   {ar:'اسْمَا المَكَانِ وَالزَّمَان', en:'Place & time',        pat:'مَفْعَل / مَفْعِل',  ex:'مَلْعَبٌ',    gl:'playground'},
+    masdar:  {ar:'المَصْدَر',                  en:'Verbal noun',           pat:'no fixed pattern',  ex:'ضَرْبًا',     gl:'striking'},
+    marra:   {ar:'اسْمُ المَرَّة',             en:'Single occurrence',     pat:'فَعْلَة',            ex:'قَتْلَةٌ',    gl:'one killing'},
+    hay:     {ar:'اسْمُ الهَيْئَة',            en:'Manner',                pat:'فِعْلَة',            ex:'قِتْلَةٌ',    gl:'a way of killing'},
+    sifa:    {ar:'الصِّفَةُ المُشَبَّهَة',     en:'Lasting quality',       pat:'فُعَال · فَعْلَان …', ex:'عَطْشَانُ',   gl:'thirsty'},
+    nisba:   {ar:'النِّسْبَة',                 en:'Belonging',             pat:'ـِيّ',               ex:'مَالِكِيٌّ',  gl:'of the Mālikī school'},
+    ala:     {ar:'اسْمُ الآلَة',               en:'Tool',                  pat:'مِفْعَال / مِفْعَل',  ex:'مِفْتَاحٌ',   gl:'key'},
+    tafdil:  {ar:'اسْمُ التَّفْضِيل',          en:'Comparative',           pat:'أَفْعَل',            ex:'شَرٌّ',       gl:'worse'},
+    mubalagha:{ar:'صِيَغُ المُبَالَغَة',        en:'Intensive',             pat:'فَعَّال · فَعُول',    ex:'لَعَّابٌ',    gl:'always playing'},
+    tasghir: {ar:'التَّصْغِير',                en:'Diminutive',            pat:'فُعَيْل',            ex:'كُلَيْبٌ',    gl:'little dog'},
+  };
+  const TKEYS=Object.keys(TY);
+
+  // recap table
+  (function(){
+    const order=['fa3il','maf3ul','makan','masdar','marra','hay','sifa','nisba','ala','tafdil','mubalagha','tasghir'];
+    let h=''; order.forEach(k=>{ const t=TY[k];
+      h+=`<tr><td><span class="nm">${t.ar}</span><br><small style="color:var(--muted)">${t.en}</small></td><td><span class="w">${t.pat}</span></td><td><span class="w">${t.ex}</span></td><td>${t.gl}</td></tr>`; });
+    document.getElementById('recapBody').innerHTML=h;
+  })();
+
+  /* =============== word factory =============== */
+  const FT=[ // key, label, pattern shown
+    ['fa3il','Doer','فَاعِل'], ['maf3ul','Receiver','مَفْعُول'], ['masdar','Verbal noun','—'],
+    ['marra','Once','فَعْلَة'], ['makan','Place / time','مَفْعَل · مَفْعِل'], ['ala','Tool','مِفْعَال'], ['mubalagha','Intensive','فَعَّال']
+  ];
+  const FV=[
+    {v:'قَتَلَ', en:'kill',  f:{fa3il:['قَاتِلٌ','killer'], maf3ul:['مَقْتُولٌ','killed'], masdar:['قَتْلٌ','killing'], marra:['قَتْلَةٌ','one killing'], makan:['مَقْتَلٌ','place of killing'], mubalagha:['قَتَّالٌ','a ruthless killer']}},
+    {v:'كَتَبَ', en:'write', f:{fa3il:['كَاتِبٌ','writer'], maf3ul:['مَكْتُوبٌ','written'], masdar:['كِتَابَةٌ','writing'], makan:['مَكْتَبٌ','office, desk']}},
+    {v:'شَرِبَ', en:'drink', f:{fa3il:['شَارِبٌ','drinker'], maf3ul:['مَشْرُوبٌ','a drink'], masdar:['شُرْبٌ','drinking'], marra:['شَرْبَةٌ','a sip'], makan:['مَشْرَبٌ','drinking place'], mubalagha:['شَرَّابٌ','a heavy drinker']}},
+    {v:'لَعِبَ', en:'play',  f:{fa3il:['لَاعِبٌ','player'], maf3ul:['مَلْعُوبٌ','played (with)'], masdar:['لَعِبٌ','play'], marra:['لَعْبَةٌ','a game'], makan:['مَلْعَبٌ','playground'], mubalagha:['لَعَّابٌ','always playing']}},
+    {v:'ضَرَبَ', en:'strike',f:{fa3il:['ضَارِبٌ','striker'], maf3ul:['مَضْرُوبٌ','struck'], masdar:['ضَرْبٌ','striking'], marra:['ضَرْبَةٌ','a blow'], makan:['مَضْرِبٌ','place of striking']}},
+    {v:'فَتَحَ', en:'open',  f:{fa3il:['فَاتِحٌ','opener, conqueror'], maf3ul:['مَفْتُوحٌ','open'], masdar:['فَتْحٌ','opening'], marra:['فَتْحَةٌ','one opening'], ala:['مِفْتَاحٌ','key'], mubalagha:['فَتَّاحٌ','the All-Opener']}},
+  ];
+  (function(){
+    const wrap=document.getElementById('fv'), box=document.getElementById('factory');
+    const chips=[];
+    function draw(i){
+      const d=FV[i];
+      chips.forEach((c,k)=>c.classList.toggle('active',k===i));
+      let h=`<div class="root"><div class="v">${d.v}</div><div class="m">${d.en} — the nouns it gives</div></div><div class="grid g4">`;
+      FT.forEach(([k,lbl,pat])=>{
+        const e=d.f[k];
+        h+=`<div class="fcard ${e?'':'none'}"><div class="t"><small>${lbl}</small>${TY[k].ar}</div><div class="p">${pat}</div><div class="w">${e?e[0]:'—'}</div><div class="g">${e?e[1]:'no common word'}</div></div>`;
+      });
+      box.innerHTML=h+'</div>';
+    }
+    FV.forEach((d,i)=>{
+      const b=document.createElement('button'); b.className='vchip';
+      b.innerHTML=`<span class="w ar">${d.v}</span><small>${d.en}</small>`;
+      b.onclick=()=>draw(i); wrap.appendChild(b); chips.push(b);
+    });
+    draw(0);
+  })();
+
+  /* =============== quiz =============== */
+  const Q=[
+    {w:'لَاعِبٌ',  k:'fa3il',    why:'Pattern <b>فَاعِل</b>: the one who plays (لَعِبَ).'},
+    {w:'مَقْتُولٌ', k:'maf3ul',   why:'Pattern <b>مَفْعُول</b>: the one who was killed (قَتَلَ).'},
+    {w:'مَشْرِقٌ',  k:'makan',    why:'Pattern <b>مَفْعِل</b> (an exception that takes kasra): the place of rising. مَغْرِبٌ works the same way.'},
+    {w:'ضَرْبًا',   k:'masdar',   why:'The <b>verbal noun</b> of ضَرَبَ: the action itself, with no fixed pattern.'},
+    {w:'قَتْلَةٌ',  k:'marra',    why:'Pattern <b>فَعْلَة</b> (fatḥa on the first letter): <b>one</b> killing.'},
+    {w:'قِتْلَةٌ',  k:'hay',      why:'Pattern <b>فِعْلَة</b> (kasra on the first letter): the <b>manner</b> of killing.'},
+    {w:'عَطْشَانُ', k:'sifa',     why:'Pattern <b>فَعْلَان</b>: a lasting state — “thirsty”.'},
+    {w:'مَالِكِيٌّ', k:'nisba',    why:'It ends in <b>ـِيّ</b>: belonging to Mālik (the Mālikī school).'},
+    {w:'مِفْتَاحٌ', k:'ala',      why:'Pattern <b>مِفْعَال</b>: the tool you open with (فَتَحَ).'},
+    {w:'شَرٌّ',      k:'tafdil',   why:'A shortened <b>comparative</b> (from أَشَرّ): “worse”. Its partner is خَيْرٌ.'},
+    {w:'لَعَّابٌ',  k:'mubalagha',why:'Pattern <b>فَعَّال</b>: someone who plays all the time — an <b>intensive</b>.'},
+    {w:'كُلَيْبٌ',  k:'tasghir',  why:'Pattern <b>فُعَيْل</b>: the diminutive of كَلْب, “little dog”.'},
+  ];
+  let qi=0, qs=0;
+  function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function loadQ(){
+    const q=Q[qi];
+    document.getElementById('qword').textContent=q.w;
+    document.getElementById('qcount').textContent=`Question ${qi+1} of ${Q.length}`;
+    document.getElementById('qfor').textContent='Which kind of derived noun is this?';
+    const dis=shuffle(TKEYS.filter(k=>k!==q.k)).slice(0,3);
+    const opts=shuffle([q.k,...dis]);
+    const wrap=document.getElementById('qopts'); wrap.innerHTML='';
+    opts.forEach(k=>{
+      const b=document.createElement('button'); b.className='opt'; b.dataset.k=k;
+      b.innerHTML=`<span class="ar">${TY[k].ar}</span>${TY[k].en}`;
+      b.onclick=()=>answer(b,k,q); wrap.appendChild(b);
+    });
+    document.getElementById('qfb').className='fb';
+  }
+  function answer(btn,k,q){
+    [...document.querySelectorAll('#qopts .opt')].forEach(o=>{ o.disabled=true; if(o.dataset.k===q.k) o.classList.add('correct'); });
+    const fb=document.getElementById('qfb');
+    if(k===q.k){qs++; fb.className='fb ok show'; fb.innerHTML='✅ Correct! '+q.why;}
+    else{btn.classList.add('wrong'); fb.className='fb no show'; fb.innerHTML='Not quite. '+q.why;}
+    qi++;
+    if(qi<Q.length){ setTimeout(loadQ,2500); }
+    else{ setTimeout(()=>{document.getElementById('qscore').textContent=`Score: ${qs} / ${Q.length}`;},1500); }
+  }
+  function buildKey(){
+    const wrap=document.getElementById('keyList');
+    Q.forEach((q,i)=>{
+      const row=document.createElement('div'); row.className='keyrow';
+      row.innerHTML=`<div class="qn">${i+1}</div><div class="body">
+        <span class="phrase ar">${q.w}</span> <span class="verdict">${TY[q.k].ar} · ${TY[q.k].en}</span>
+        <div class="why">${q.why}</div></div>`;
+      wrap.appendChild(row);
+    });
+  }
+  loadQ(); buildKey(); render();
+</script>
+</body>
+</html>
